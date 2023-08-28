@@ -1,0 +1,30 @@
+{
+  "id": "4208869",
+  "name": "flutter_xiaomishop",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5387803",
+      "name": "维修服务_o",
+      "font_class": "weixiufuwu_o",
+      "unicode": "eb5c",
+      "unicode_decimal": 60252
+    },
+    {
+      "icon_id": "648790",
+      "name": "信息",
+      "font_class": "xinxi",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "22724211",
+      "name": "icon-小米归属",
+      "font_class": "icon-xiaomiguishu",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    }
+  ]
+}
