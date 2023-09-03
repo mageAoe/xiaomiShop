@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:xmshop/app/services/httpsClient.dart';
 
 import '../controllers/category_controller.dart';
 
@@ -96,15 +97,20 @@ class CategoryView extends GetView<CategoryController> {
                   childAspectRatio: 240/320
                 ), 
                 itemBuilder: (context,index){
-                  return Column(
+                  return InkWell(
+                    onTap: () {
+                      Get.toNamed('/product-list', arguments: {"cid": controller.rightCategoryList[index].sId});
+                    },
+                    child: Column(
                     children: [
                       Container(
                         alignment: Alignment.center,
                         width: double.infinity,
-                        child: Image.network("https://xiaomi.itying.com/${controller.rightCategoryList[index].pic}", fit: BoxFit.fitHeight),
+                        child: Image.network(HttpsClient.repleaUrl(controller.rightCategoryList[index].pic), fit: BoxFit.fitHeight),
                       ),
                       Padding(padding: EdgeInsets.fromLTRB(0, ScreenAdapter.height(20), 0, 0),child: Text("${controller.rightCategoryList[index].title}", style: TextStyle(fontSize: ScreenAdapter.fontSize(32))))
                     ],
+                  ),
                   );
                 }
               )),

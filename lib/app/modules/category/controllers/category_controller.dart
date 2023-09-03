@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
-import 'package:dio/dio.dart';
 import '../../../models/category_model.dart';
+import '../../../services/httpsClient.dart';
 
 
 class CategoryController extends GetxController {
   //TODO: Implement CategoryController
+  final HttpsClient _httpsClient = HttpsClient();
 
   RxInt selectIndex = 0.obs;
   RxList<CategoryItem> leftCategoryList = <CategoryItem>[].obs;
@@ -24,18 +25,22 @@ class CategoryController extends GetxController {
  }
 
  getLeftCategoryList() async {
-    var res = await Dio().get("https://xiaomi.itying.com/api/pcate");
-    CategoryModel category =  CategoryModel.fromJson(res.data);
-    leftCategoryList.value = category.result!;
-    getRightCategoryList(leftCategoryList[0].sId!);
-    print(leftCategoryList[0].sId);
-    update();
+    var res = await _httpsClient.get("https://xiaomi.itying.com/api/pcate");
+    if(res!=null){
+      CategoryModel category =  CategoryModel.fromJson(res.data);
+      leftCategoryList.value = category.result!;
+      getRightCategoryList(leftCategoryList[0].sId!);
+      print(leftCategoryList[0].sId);
+      update();
+    }
  }
 
   getRightCategoryList(String pid) async {
-    var res = await Dio().get("https://xiaomi.itying.com/api/pcate?pid=$pid");
-    CategoryModel category =  CategoryModel.fromJson(res.data);
-    rightCategoryList.value = category.result!;
-    update();
+    var res = await _httpsClient.get("https://xiaomi.itying.com/api/pcate?pid=$pid");
+    if(res!=null){
+      CategoryModel category =  CategoryModel.fromJson(res.data);
+      rightCategoryList.value = category.result!;
+      update();
+    }
  }
 }

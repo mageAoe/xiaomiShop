@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xmshop/app/services/httpsClient.dart';
 import '../controllers/home_controller.dart';
 import '../../../services/screenAdaoter.dart';
 import '../../../services/fonts.dart';
@@ -17,7 +18,7 @@ class HomeView extends GetView<HomeController> {
             left: 0,
             right: 0,
             child: Obx(() => AppBar( // 重新渲染需要 Obx
-              leading: controller.flag.value ? const Text('') : const Icon(XiaoMiFont.xiaomiguishu),
+              leading: controller.flag.value ? const Text('') : const Icon(XiaoMiFont.xiaomiguishu,color: Colors.red),
               leadingWidth: controller.flag.value ? 20 : ScreenAdapter.width(140),
               title: AnimatedContainer(
                 duration: const Duration(milliseconds: 600),
@@ -33,7 +34,7 @@ class HomeView extends GetView<HomeController> {
                     const Padding(padding: EdgeInsets.fromLTRB(10, 0, 4, 0), child: Icon(Icons.search, color: Colors.black45)),
                     Text('手机', style: TextStyle(color: Colors.black54,fontSize: ScreenAdapter.fontSize(40),fontWeight: FontWeight.w500)),
                     const Expanded(child: Text('')), // 中间用Expanded控件
-                    const Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child:Icon( Icons.fit_screen_sharp, color: Colors.black45)),
+                    const Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child:Icon( XiaoMiFont.saoyisao, color: Colors.black45)),
                   ],
                 ),
               ),
@@ -42,7 +43,7 @@ class HomeView extends GetView<HomeController> {
               elevation: 0,
               actions: [
                 IconButton(onPressed: (){}, icon: Icon(Icons.qr_code, color: controller.flag.value ? Colors.black87: Colors.white)),
-                IconButton(onPressed: (){}, icon: Icon(Icons.message, color: controller.flag.value ? Colors.black87: Colors.white))
+                IconButton(onPressed: (){}, icon: Icon(XiaoMiFont.xiaoxi, color: controller.flag.value ? Colors.black87: Colors.white))
               ],
             ))     
           );
@@ -74,9 +75,8 @@ class HomeView extends GetView<HomeController> {
           height: ScreenAdapter.height(682),
           child: Obx(() => Swiper(
             itemBuilder: (context, index){
-              String picUrl = "https://xiaomi.itying.com/${controller.swiperList[index].pic}";
               return Image.network(
-                picUrl.replaceAll('\\', '/'),
+                HttpsClient.repleaUrl(controller.swiperList[index].pic),
                 fit: BoxFit.fill,);
             },
             itemCount: controller.swiperList.length,
@@ -137,7 +137,7 @@ class HomeView extends GetView<HomeController> {
                     alignment: Alignment.center,
                     width: ScreenAdapter.height(140),
                     height: ScreenAdapter.height(140),
-                    child: Image.network("https://xiaomi.itying.com/${controller.categoryList[index*10+i].pic}",fit: BoxFit.fitHeight),
+                    child: Image.network(HttpsClient.repleaUrl(controller.categoryList[index*10+i].pic),fit: BoxFit.fitHeight),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, ScreenAdapter.height(4), 0, 0),
@@ -230,7 +230,6 @@ class HomeView extends GetView<HomeController> {
                     children: 
                       controller.sellingPlist.asMap().entries.map((entrie) {
                         var value = entrie.value;
-                        var picUrl = "http://xiaomi.itying.com/${value.pic}";
                         return Expanded(
                           flex: 1,
                           child: Container(
@@ -255,7 +254,7 @@ class HomeView extends GetView<HomeController> {
                                 Expanded(
                                   flex: 2,
                                   child: Padding(padding: EdgeInsets.all(ScreenAdapter.height(8)),
-                                    child: Image.network(picUrl.replaceAll('\\', '/'),fit: BoxFit.cover))
+                                    child: Image.network(HttpsClient.repleaUrl(value.pic),fit: BoxFit.cover))
                                 )
                               ],
                             ),
@@ -297,7 +296,6 @@ class HomeView extends GetView<HomeController> {
             shrinkWrap: true, // 收缩，让元素宽度自适应
             physics: const NeverScrollableScrollPhysics(), // 禁止左右滑动
             itemBuilder: (context, index) {
-              String picUrl = "https://xiaomi.itying.com/${controller.bestgPlist[index].sPic}";
               return Container(
                 padding: EdgeInsets.all(ScreenAdapter.width(20)),
                 decoration: BoxDecoration(
@@ -308,7 +306,7 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(ScreenAdapter.width(10)),
-                      child: Image.network(picUrl.replaceAll('\\', '/')),
+                      child: Image.network(HttpsClient.repleaUrl(controller.bestgPlist[index].sPic)),
                     ),
                     Container(
                       padding: EdgeInsets.all(ScreenAdapter.width(10)),

@@ -20,6 +20,11 @@ void main() {
       builder: (context , child){
         return GetMaterialApp(
           title: "Application",
+          theme: ThemeData( // 配置主题
+            primarySwatch: Colors.grey
+          ),
+          // 配置ios动画
+          defaultTransition: Transition.rightToLeft,
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 
 import '../controllers/tabs_controller.dart';
 
+import '../../../services/fonts.dart';
+
 class TabsView extends GetView<TabsController> {
   const TabsView({Key? key}) : super(key: key);
   @override
@@ -32,19 +34,19 @@ class TabsView extends GetView<TabsController> {
           ),
           BottomNavigationBarItem(
             label: '分类',
-            icon: Icon(Icons.category)
+            icon: Icon(XiaoMiFont.fenlei)
           ),
           BottomNavigationBarItem(
-            label: '首页',
-            icon: Icon(Icons.usb_rounded)
+            label: '服务',
+            icon: Icon(XiaoMiFont.fuwu)
           ),
           BottomNavigationBarItem(
-            label: '首页',
-            icon: Icon(Icons.palette)
+            label: '购物车',
+            icon: Icon(XiaoMiFont.gouwuche)
           ),
           BottomNavigationBarItem(
-            label: '首页',
-            icon: Icon(Icons.language_outlined)
+            label: '我的',
+            icon: Icon(XiaoMiFont.wode)
           )
         ]
       ),
