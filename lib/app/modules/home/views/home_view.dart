@@ -20,22 +20,27 @@ class HomeView extends GetView<HomeController> {
             child: Obx(() => AppBar( // 重新渲染需要 Obx
               leading: controller.flag.value ? const Text('') : const Icon(XiaoMiFont.xiaomiguishu,color: Colors.red),
               leadingWidth: controller.flag.value ? 20 : ScreenAdapter.width(140),
-              title: AnimatedContainer(
-                duration: const Duration(milliseconds: 600),
-                width: controller.flag.value ? ScreenAdapter.width(800) : ScreenAdapter.width(620),
-                height: ScreenAdapter.height(96),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: const Color.fromARGB(237, 252, 243, 236)
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Padding(padding: EdgeInsets.fromLTRB(10, 0, 4, 0), child: Icon(Icons.search, color: Colors.black45)),
-                    Text('手机', style: TextStyle(color: Colors.black54,fontSize: ScreenAdapter.fontSize(40),fontWeight: FontWeight.w500)),
-                    const Expanded(child: Text('')), // 中间用Expanded控件
-                    const Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child:Icon( XiaoMiFont.saoyisao, color: Colors.black45)),
-                  ],
+              title: InkWell(
+                onTap: (){
+                  Get.toNamed('/search');
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 600),
+                  width: controller.flag.value ? ScreenAdapter.width(800) : ScreenAdapter.width(620),
+                  height: ScreenAdapter.height(96),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(237, 252, 243, 236)
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Padding(padding: EdgeInsets.fromLTRB(10, 0, 4, 0), child: Icon(Icons.search, color: Colors.black45)),
+                      Text('手机', style: TextStyle(color: Colors.black54,fontSize: ScreenAdapter.fontSize(40),fontWeight: FontWeight.w500)),
+                      const Expanded(child: Text('')), // 中间用Expanded控件
+                      const Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child:Icon( XiaoMiFont.saoyisao, color: Colors.black45)),
+                    ],
+                  ),
                 ),
               ),
               centerTitle: true,

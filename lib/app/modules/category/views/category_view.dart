@@ -13,28 +13,34 @@ class CategoryView extends GetView<CategoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          width: ScreenAdapter.width(840),
-          height: ScreenAdapter.height(96),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: const Color.fromRGBO(246, 246, 246, 1)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 4, 0),
-                  child: Icon(Icons.search, color: Colors.black45)),
-              Text('手机',
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: ScreenAdapter.fontSize(40),
-                      fontWeight: FontWeight.w500)),
-              const Expanded(child: Text('')), // 中间用Expanded控件
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Icon(Icons.fit_screen_sharp, color: Colors.black45)),
-            ],
+        title: InkWell(
+          onTap: (){
+            Get.toNamed('/search');
+          },
+          child: Container(
+            width: ScreenAdapter.width(840),
+            height: ScreenAdapter.height(96),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: const Color.fromRGBO(246, 246, 246, 1)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 4, 0),
+                    child: Icon(Icons.search, color: Colors.black45)),
+                Text('手机',
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: ScreenAdapter.fontSize(40),
+                        fontWeight: FontWeight.w500)),
+                // const Expanded(child: Text('')), // 中间用Expanded控件
+                const Spacer(),
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Icon(Icons.fit_screen_sharp, color: Colors.black45)),
+              ],
+            ),
           ),
         ),
         backgroundColor: Colors.white,
