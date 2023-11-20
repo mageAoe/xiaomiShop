@@ -12,9 +12,8 @@ class ProductListView extends GetView<ProductListController> {
   const ProductListView({Key? key}) : super(key: key);
 
   Widget _producteListWidget() {
-    print(controller.plist.isNotEmpty);
-    return Obx(() => controller.plist.isNotEmpty
-        ? ListView.builder(
+    // print(controller.plist.isNotEmpty);
+    return ListView.builder(
             controller: controller.scrollController,
             // padding: EdgeInsets.fromLTRB(
             //     ScreenAdapter.height(26),
@@ -130,8 +129,7 @@ class ProductListView extends GetView<ProductListController> {
                       : const Text('')
                 ],
               );
-            })
-        : _progressIndicator());
+            }) ;
   }
 
   Widget _subHeaderWidget() {
@@ -227,19 +225,24 @@ class ProductListView extends GetView<ProductListController> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               color: const Color.fromRGBO(246, 246, 246, 1)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 4, 0),
-                  child: Icon(Icons.search, color: Colors.black45)),
-              Text('手机',
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: ScreenAdapter.fontSize(40),
-                      fontWeight: FontWeight.w500)),
-              const Expanded(child: Text('')), // 中间用Expanded控件
-            ],
+          child: InkWell(
+            onTap: () {
+              Get.offAndToNamed('/search');
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 4, 0),
+                    child: Icon(Icons.search, color: Colors.black45)),
+                Text(controller.keywords != null ? "${controller.keywords}":"",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: ScreenAdapter.fontSize(40),
+                        fontWeight: FontWeight.w500)),
+                const Expanded(child: Text('')), // 中间用Expanded控件
+              ],
+            ),
           ),
         ),
         backgroundColor: Colors.white,
@@ -247,9 +250,10 @@ class ProductListView extends GetView<ProductListController> {
         elevation: 0,
         actions: const [Text('')],
       ),
-      body: Stack(
+      body: Obx(() => controller.plist.isNotEmpty
+        ? Stack(
         children: [_producteListWidget(), _subHeaderWidget()],
-      ),
+      ): _progressIndicator()),
     );
   }
 }

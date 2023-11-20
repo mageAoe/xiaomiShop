@@ -37,7 +37,7 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       const Padding(padding: EdgeInsets.fromLTRB(10, 0, 4, 0), child: Icon(Icons.search, color: Colors.black45)),
                       Text('手机', style: TextStyle(color: Colors.black54,fontSize: ScreenAdapter.fontSize(40),fontWeight: FontWeight.w500)),
-                      const Expanded(child: Text('')), // 中间用Expanded控件
+                      const Spacer(), // 中间用Expanded控件
                       const Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child:Icon( XiaoMiFont.saoyisao, color: Colors.black45)),
                     ],
                   ),
@@ -132,7 +132,7 @@ class HomeView extends GetView<HomeController> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
               crossAxisSpacing: ScreenAdapter.width(20),
-              childAspectRatio: 1.2,
+              childAspectRatio: 1,
               mainAxisSpacing: ScreenAdapter.height(20)
             ), 
             itemBuilder: (context, i){
@@ -144,9 +144,14 @@ class HomeView extends GetView<HomeController> {
                     height: ScreenAdapter.height(140),
                     child: Image.network(HttpsClient.repleaUrl(controller.categoryList[index*10+i].pic),fit: BoxFit.fitHeight),
                   ),
+                  // Container(
+                  //   width: ScreenAdapter.height(140),
+                  //   padding: EdgeInsets.fromLTRB(0, ScreenAdapter.height(4), 0, 0),
+                  //   child: Text("${controller.categoryList[index*10+i].title}", style: TextStyle(fontSize: ScreenAdapter.fontSize(24))), // 34,
+                  // )
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, ScreenAdapter.height(4), 0, 0),
-                    child: Text("${controller.categoryList[index*10+i].title}", style: TextStyle(fontSize: ScreenAdapter.fontSize(34))),
+                    child: Text("${controller.categoryList[index*10+i].title}", style: TextStyle(fontSize: ScreenAdapter.fontSize(34))), // 34
                   ),
                 ],
               );

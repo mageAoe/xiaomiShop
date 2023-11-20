@@ -10,12 +10,18 @@ class ProductListController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldGlobalKey = GlobalKey<ScaffoldState>();
   final ScrollController scrollController = ScrollController();
   final HttpsClient _httpsClient = HttpsClient();
-  RxInt page = 1.obs;
+  RxList<PlistItemModel> plist = <PlistItemModel>[].obs;
+
+  int page = 1;
   int limit = 8;
   bool flag = true;
   RxBool hasData = true.obs;
-  RxList<PlistItemModel> plist = <PlistItemModel>[].obs;
   String sort = "";
+
+  String? keywords = Get.arguments['keywords'];
+  String? cid = Get.arguments['cid'];
+  String apiUrl = "";
+
 
 
   // 二级导航数据
@@ -54,7 +60,7 @@ class ProductListController extends GetxController {
       subHeaderSort.value = subHeaderList[id-1]['sort'];
 
       // 重置page
-      page.value = 1;
+      page = 1;
       plist.value = [];
       hasData.value = true;
       // 滚动条回到顶部
@@ -79,13 +85,20 @@ class ProductListController extends GetxController {
   void getPlistData() async{
     if(flag && hasData.value){
       flag = false;
-      var res = await _httpsClient.get("api/plist?cid=${Get.arguments['cid']}&page=${page.value}&pageSize=$limit&sort=$sort");
+      
+      if(cid!=null){
+        apiUrl = "api/plist?cid=$cid&page=$page&pageSize=$limit&sort=$sort";
+      }else{
+         apiUrl = "api/plist?search=$keywords&page=$page&pageSize=$limit&sort=$sort";
+      }
+
+      var res = await _httpsClient.get(apiUrl);
       if(res!=null){
         PlistModel category =  PlistModel.fromJson(res.data);
         // 拼接数据
         // plist.value = category.result!;
         plist.addAll(category.result!);
-        page.value++;
+        page++;
         update();
         flag = true;
         if(category.result!.length < limit){

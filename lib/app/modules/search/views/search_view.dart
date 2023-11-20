@@ -17,9 +17,15 @@ class SearchView extends GetView<SearchPageController> {
         backgroundColor: Colors.white,
         centerTitle: true,
         actions: [
-          TextButton(onPressed: (){
-            print('搜索');
-          }, child: Text('搜索',style: TextStyle(fontSize: ScreenAdapter.fontSize(36),color: Colors.black87)))
+          TextButton(
+            onPressed: (){
+              // print('搜索');
+              Get.toNamed('/product-list',arguments: {
+                "keywords": controller.keywords
+              });
+            }, 
+            child: Text('搜索',style: TextStyle(fontSize: ScreenAdapter.fontSize(36),color: Colors.black87))
+          )
         ],
         elevation: 0,
       ),
@@ -160,6 +166,19 @@ class SearchView extends GetView<SearchPageController> {
               borderSide: BorderSide.none
             )
           ),
+          onChanged: (value) {
+            controller.keywords = value;
+          },
+          // 监听键盘的回车事件
+          onSubmitted: (value) {
+            // Get.toNamed('/product-list',arguments: {
+            //     "keywords": value
+            // });
+            // 替换路由
+            Get.offAndToNamed('/product-list',arguments: {
+                "keywords": value
+            });
+          },
         ),
       );
   }
