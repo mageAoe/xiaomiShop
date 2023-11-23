@@ -306,34 +306,42 @@ class HomeView extends GetView<HomeController> {
             shrinkWrap: true, // 收缩，让元素宽度自适应
             physics: const NeverScrollableScrollPhysics(), // 禁止左右滑动
             itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.all(ScreenAdapter.width(20)),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(ScreenAdapter.width(10)),
-                      child: Image.network(HttpsClient.repleaUrl(controller.bestgPlist[index].sPic)),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(ScreenAdapter.width(10)),
-                      width: double.infinity,
-                      child: Text('${controller.bestgPlist[index].title}',style: TextStyle(fontSize: ScreenAdapter.fontSize(42))),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(ScreenAdapter.width(10)),
-                      width: double.infinity,
-                      child: Text('${controller.bestgPlist[index].subTitle}',style: TextStyle(fontSize: ScreenAdapter.fontSize(32))),
-                    ),
-                     Container(
-                      padding: EdgeInsets.all(ScreenAdapter.width(10)),
-                      width: double.infinity,
-                      child: Text('￥${controller.bestgPlist[index].price}', style: TextStyle(fontSize: ScreenAdapter.fontSize(32),fontWeight: FontWeight.bold)),
-                    ),
-                  ],
+              return InkWell(
+                onTap: (){
+                  // 跳转详情
+                  Get.toNamed('/product-content',arguments: {
+                    "id": controller.bestgPlist[index].sId
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(ScreenAdapter.width(20)),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(ScreenAdapter.width(10)),
+                        child: Image.network(HttpsClient.repleaUrl(controller.bestgPlist[index].sPic)),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(ScreenAdapter.width(10)),
+                        width: double.infinity,
+                        child: Text('${controller.bestgPlist[index].title}',style: TextStyle(fontSize: ScreenAdapter.fontSize(42))),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(ScreenAdapter.width(10)),
+                        width: double.infinity,
+                        child: Text('${controller.bestgPlist[index].subTitle}',style: TextStyle(fontSize: ScreenAdapter.fontSize(32))),
+                      ),
+                       Container(
+                        padding: EdgeInsets.all(ScreenAdapter.width(10)),
+                        width: double.infinity,
+                        child: Text('￥${controller.bestgPlist[index].price}', style: TextStyle(fontSize: ScreenAdapter.fontSize(32),fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

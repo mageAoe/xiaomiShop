@@ -6,6 +6,8 @@ import '../controllers/search_controller.dart';
 
 import '../../../services/screenAdaoter.dart';
 
+import '../../../services/searchServices.dart';
+
 class SearchView extends GetView<SearchPageController> {
   const SearchView({Key? key}) : super(key: key);
   @override
@@ -19,8 +21,10 @@ class SearchView extends GetView<SearchPageController> {
         actions: [
           TextButton(
             onPressed: (){
-              // print('搜索');
-              Get.toNamed('/product-list',arguments: {
+              // 保存搜索记录
+              SearchServices.setHistoryData(controller.keywords);
+              // 替换路由
+              Get.offAndToNamed('/product-list',arguments: {
                 "keywords": controller.keywords
               });
             }, 
@@ -32,31 +36,111 @@ class SearchView extends GetView<SearchPageController> {
       body: ListView(
         padding: EdgeInsets.all(ScreenAdapter.height(20)),
         children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: ScreenAdapter.height(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('搜索历史',style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: ScreenAdapter.fontSize(42)
-                )),
-                const Icon(Icons.delete_forever_rounded)
-              ],
-            ),
+          Obx(()=> controller.historyList.isNotEmpty ?  Padding(
+              padding: EdgeInsets.only(bottom: ScreenAdapter.height(20)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('搜索历史',style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenAdapter.fontSize(42)
+                  )),
+                  // const Icon(Icons.delete_forever_rounded)
+                  IconButton(onPressed: (){
+                    Get.bottomSheet(
+                      Container(
+                        padding: EdgeInsets.all(ScreenAdapter.width(20)),
+                        color: Colors.white,
+                        width: ScreenAdapter.width(1080),
+                        height: ScreenAdapter.height(360),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("您确定要清空历史记录吗？",style: TextStyle(fontSize: ScreenAdapter.fontSize(48)))
+                              ],
+                            ),
+                            SizedBox(height: ScreenAdapter.height(40)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  width: ScreenAdapter.width(480),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(const Color.fromARGB(209, 212, 209, 209)),
+                                      foregroundColor: MaterialStateProperty.all(Colors.white)
+                                    ),
+                                    onPressed: (){
+                                      Get.back();
+                                  }, child: const Text('取消')),
+                                ),
+                                SizedBox(height: ScreenAdapter.width(40)),
+                                SizedBox(
+                                  width: ScreenAdapter.width(480),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(const  Color.fromARGB(209, 212, 209, 209)),
+                                      foregroundColor: MaterialStateProperty.all(Colors.red)
+                                    ),
+                                    onPressed: (){
+                                      controller.clearHistoryData();
+                                      Get.back();
+                                    }, 
+                                    child: const Text('确定')),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    );
+                  }, icon: const Icon(Icons.delete_forever_rounded)
+                 )
+                ],
+              ),
+            ): const Text(''),
           ),
-          Wrap(
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(ScreenAdapter.width(32), ScreenAdapter.width(16), ScreenAdapter.width(32), ScreenAdapter.width(16)),
-                margin: EdgeInsets.all(ScreenAdapter.height(16)),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: const Text('手机'),
+          Obx(()=> Wrap(
+              children: controller.historyList.map((value) =>  GestureDetector(
+                onLongPress: () {
+                  Get.defaultDialog(
+                    title: "提示信息!",
+                    middleText: "您确定要删除吗？",
+                    confirm: ElevatedButton(
+                      style: ButtonStyle(
+                         backgroundColor: MaterialStateProperty.all(const  Color.fromARGB(209, 212, 209, 209)),
+                         foregroundColor: MaterialStateProperty.all(Colors.red)
+                      ),
+                      onPressed: (){
+                        controller.removeHistoryData(value);
+                        Get.back();
+                    }, child: const Text('确定')
+                    ),
+                    cancel: ElevatedButton(
+                      style: ButtonStyle(
+                         backgroundColor: MaterialStateProperty.all(const  Color.fromARGB(209, 212, 209, 209)),
+                         foregroundColor: MaterialStateProperty.all(Colors.white)
+                      ),
+                      onPressed: (){
+                        Get.back();
+                      }, child:  const Text('取消')
+                    )
+                  );
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(ScreenAdapter.width(32), ScreenAdapter.width(16), ScreenAdapter.width(32), ScreenAdapter.width(16)),
+                    margin: EdgeInsets.all(ScreenAdapter.height(16)),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Text('$value'),
+                  ),
               )
-            ],
+               ).toList()
+            ),
           ),
           const SizedBox(height: 20),
           Padding(
@@ -88,7 +172,7 @@ class SearchView extends GetView<SearchPageController> {
 
           const SizedBox(height: 20),
 
-          // 热销商品
+          // 小米热搜
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -174,6 +258,7 @@ class SearchView extends GetView<SearchPageController> {
             // Get.toNamed('/product-list',arguments: {
             //     "keywords": value
             // });
+            SearchServices.setHistoryData(value);
             // 替换路由
             Get.offAndToNamed('/product-list',arguments: {
                 "keywords": value

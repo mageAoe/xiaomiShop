@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/productContent/bindings/product_content_binding.dart';
+import '../modules/productContent/views/product_content_view.dart';
 import '../modules/productList/bindings/product_list_binding.dart';
 import '../modules/productList/views/product_list_view.dart';
 import '../modules/search/bindings/search_binding.dart';
@@ -12,7 +14,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.TABS;
+  static const INITIAL = Routes.PRODUCT_CONTENT;
 
   static final routes = [
     GetPage(
@@ -32,6 +34,11 @@ class AppPages {
       name: _Paths.SEARCH,
       page: () => const SearchView(),
       binding: SearchBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_CONTENT,
+      page: () => const ProductContentView(),
+      binding: ProductContentBinding(),
     ),
   ];
 }
