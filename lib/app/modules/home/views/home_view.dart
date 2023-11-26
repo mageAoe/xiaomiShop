@@ -133,15 +133,15 @@ class HomeView extends GetView<HomeController> {
               crossAxisCount: 5,
               crossAxisSpacing: ScreenAdapter.width(20),
               childAspectRatio: 1,
-              mainAxisSpacing: ScreenAdapter.height(20)
+              mainAxisSpacing: ScreenAdapter.height(0)
             ), 
             itemBuilder: (context, i){
               return Column(
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    width: ScreenAdapter.height(140),
-                    height: ScreenAdapter.height(140),
+                    width: ScreenAdapter.width(120),
+                    height: ScreenAdapter.width(120),
                     child: Image.network(HttpsClient.repleaUrl(controller.categoryList[index*10+i].pic),fit: BoxFit.fitHeight),
                   ),
                   // Container(
@@ -172,10 +172,10 @@ class HomeView extends GetView<HomeController> {
                       alignment: Alignment.center,
                       child: Container(
                         // color: Colors.black12,
-                        child: const RectSwiperPaginationBuilder(
-                              size: Size(40.0, 3.0),
-                              activeSize: Size(40.0, 3.0),
-                              color: Colors.black12,
+                        child: RectSwiperPaginationBuilder(
+                              size: const Size(40.0, 3.0),
+                              activeSize: const Size(40.0, 3.0),
+                              color: Colors.black12.withOpacity(0.2),
                               activeColor: Colors.black54,
                             )
                           .build(context, config),

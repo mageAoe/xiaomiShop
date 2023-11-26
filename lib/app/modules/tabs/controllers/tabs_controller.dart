@@ -9,9 +9,9 @@ import '../../home/views/home_view.dart';
 
 class TabsController extends GetxController {
   //TODO: Implement TabsController
-  RxInt currentIndex = 1.obs;
+  RxInt currentIndex = 0.obs;
 
-  final PageController pageController = PageController(initialPage: 1);
+  final PageController pageController = PageController(initialPage: 0);
 
   List<Widget> pages = [
     const HomeView(),
