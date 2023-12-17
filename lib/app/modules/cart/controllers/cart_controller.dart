@@ -1,23 +1,22 @@
 import 'package:get/get.dart';
+import '../../../services/cartServices.dart';
 
 class CartController extends GetxController {
   //TODO: Implement CartController
 
-  final count = 0.obs;
+  RxList cartList = [].obs;
+
   @override
   void onInit() {
     super.onInit();
+   getCartListData();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void getCartListData() async{
+    var tempList = await CartServices.getCartList();
+    cartList.value = tempList;
+    update();
   }
-
-  void increment() => count.value++;
+  
 }

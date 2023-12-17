@@ -17,6 +17,7 @@ class RecommendPageView extends GetView {
               width: ScreenAdapter.width(1080),
               height: ScreenAdapter.height(2800),
               color: Colors.yellow,
+              child: const Text('推荐商品'),
           );
   }
 }

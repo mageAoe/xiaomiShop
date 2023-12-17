@@ -103,12 +103,14 @@ class ProductItemModel {
 class ProductAttrModel {
   String? cate;
   List<String>? list;
+  List<Map>? attrList;
 
   ProductAttrModel({this.cate, this.list});
 
   ProductAttrModel.fromJson(Map<String, dynamic> json) {
     cate = json['cate'];
     list = json['list'].cast<String>();
+    attrList = [];
   }
 
   Map<String, dynamic> toJson() {
