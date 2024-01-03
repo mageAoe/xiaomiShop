@@ -95,6 +95,10 @@ class CartServices {
     }
   }
 
+  static void setCheckedCartData(cartListData) async {
+    await Storage.setData('cartList', cartListData);
+  }
+
 
   // 获取选中的CartList数据
   static getCheckedCartData() async {

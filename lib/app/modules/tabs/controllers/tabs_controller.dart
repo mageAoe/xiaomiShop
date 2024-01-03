@@ -11,13 +11,13 @@ class TabsController extends GetxController {
   //TODO: Implement TabsController
   RxInt currentIndex = 3.obs;
 
-  final PageController pageController = PageController(initialPage: 3);
+  final PageController pageController = PageController(initialPage: 1);
 
   List<Widget> pages = [
     const HomeView(),
     const CategoryView(),
     const UserView(),
-    const CartView(),
+    CartView(),
     const GiveView(),
   ];
 

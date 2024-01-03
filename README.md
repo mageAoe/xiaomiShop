@@ -23,3 +23,5 @@
 
 > shared_preferences
     本地存储
+
+- 38

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:xmshop/app/services/screenAdaoter.dart';
+import '../controllers/cart_controller.dart';
 
 class CartItemNumView extends GetView {
   final Map cartItme;
-  const CartItemNumView(this.cartItme, {Key? key}) : super(key: key);
+  @override
+  CartController controller = Get.find();
+  CartItemNumView(this.cartItme, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +24,16 @@ class CartItemNumView extends GetView {
       ),
       child: Row(
         children: [
-          Container(
-            alignment: Alignment.center,
-            width: ScreenAdapter.width(80),
-            height: ScreenAdapter.height(64),
-            child: const Text('-'),
+          InkWell(
+            onTap: (){
+              controller.decCartNum(cartItme);
+            },
+            child: Container(
+              alignment: Alignment.center,
+              width: ScreenAdapter.width(80),
+              height: ScreenAdapter.height(64),
+              child: const Text('-'),
+            ),
           ),
           Container(
             decoration: BoxDecoration(
@@ -39,11 +47,16 @@ class CartItemNumView extends GetView {
             height: ScreenAdapter.height(64),
             child:  Text('${cartItme["count"]}'),
           ),
-          Container(
-            alignment: Alignment.center,
-            width: ScreenAdapter.width(80),
-            height: ScreenAdapter.height(64),
-            child: const Text('+'),
+          InkWell(
+            onTap: (){
+              controller.incCartNum(cartItme);
+            },
+            child: Container(
+              alignment: Alignment.center,
+              width: ScreenAdapter.width(80),
+              height: ScreenAdapter.height(64),
+              child: const Text('+'),
+            ),
           ),
         ],
       ),

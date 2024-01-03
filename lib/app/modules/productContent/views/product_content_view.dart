@@ -380,17 +380,22 @@ class ProductContentView extends GetView<ProductContentController> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: ScreenAdapter.width(130),
-                    height: ScreenAdapter.height(160),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.shopping_cart_outlined),
-                        Text("购物车",
-                            style:
-                                TextStyle(fontSize: ScreenAdapter.fontSize(32)))
-                      ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed('/cart');
+                    },
+                    child: SizedBox(
+                      width: ScreenAdapter.width(130),
+                      height: ScreenAdapter.height(160),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.shopping_cart_outlined),
+                          Text("购物车",
+                              style:
+                                  TextStyle(fontSize: ScreenAdapter.fontSize(32)))
+                        ],
+                      ),
                     ),
                   )
                 ],

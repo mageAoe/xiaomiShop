@@ -11,7 +11,7 @@ class CartItemView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
+      padding: EdgeInsets.only(top: ScreenAdapter.height(20),bottom: ScreenAdapter.height(20)),
       color: Colors.white,
       child: Row(
         children: [
