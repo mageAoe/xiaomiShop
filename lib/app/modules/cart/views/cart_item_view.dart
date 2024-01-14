@@ -4,10 +4,14 @@ import 'package:get/get.dart';
 import 'package:xmshop/app/services/screenAdaoter.dart';
 import './cart_item_num_view.dart';
 import '../../../services/httpsClient.dart';
+import '../controllers/cart_controller.dart';
 
 class CartItemView extends GetView {
+  
   final Map cartItme;
-  const CartItemView(this.cartItme, {Key? key}) : super(key: key);
+  @override
+  CartController controller = Get.find();
+  CartItemView(this.cartItme, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +24,11 @@ class CartItemView extends GetView {
             width: ScreenAdapter.width(100),
             child: Checkbox(
                   activeColor: Colors.red,
-                  value: true, onChanged: (value){}),
+                  value: cartItme['checked'], 
+                  onChanged: (value){
+                    controller.checkCartItem(cartItme);
+                  }
+                ),
           ),
           Container(
             margin: EdgeInsets.only(right: ScreenAdapter.width(20)),

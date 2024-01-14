@@ -9,16 +9,16 @@ import '../../home/views/home_view.dart';
 
 class TabsController extends GetxController {
   //TODO: Implement TabsController
-  RxInt currentIndex = 3.obs;
+  RxInt currentIndex = 4.obs;
 
-  final PageController pageController = PageController(initialPage: 1);
+  final PageController pageController = PageController(initialPage: 4);
 
   List<Widget> pages = [
     const HomeView(),
     const CategoryView(),
-    const UserView(),
-    CartView(),
     const GiveView(),
+    CartView(),
+    const UserView(),
   ];
 
   // @override

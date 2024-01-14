@@ -49,8 +49,56 @@ class XiaoMiFont {
     matchTextDirection : true
   );
 
-    static const IconData xiaoxi = IconData(
+  static const IconData xiaoxi = IconData(
     0xe817,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData kefu = IconData(
+    0xe625,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData webIcon = IconData(
+    0xe6f3,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData weixiu = IconData(
+    0xe607,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData banhalf32 = IconData(
+    0xe600,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData tuihuanhuo = IconData(
+    0xe624,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData huishou = IconData(
+    0xe626,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData schedule = IconData(
+    0xe634,
+    fontFamily: 'Schyler',
+    matchTextDirection : true
+  );
+
+  static const IconData xiaomi = IconData(
+    0xe698,
     fontFamily: 'Schyler',
     matchTextDirection : true
   );
