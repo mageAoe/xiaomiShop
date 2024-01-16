@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:xmshop/app/models/message.dart';
 
 import '../controllers/register_step_three_controller.dart';
 
@@ -24,14 +25,28 @@ class RegisterStepThreeView extends GetView<RegisterStepThreeController> {
         children:  [
           // logo
           const Logo(),
-          PassTextField(hintText: '小米账号/手机号/邮箱', onChanged: (value){
+          PassTextField(
+            controller: controller.passController,
+            hintText: '小米账号/手机号/邮箱', 
+            onChanged: (value){
             print('');
           }),
-          PassTextField(hintText: '请输入密码', onChanged: (value){
+          PassTextField(
+            controller: controller.confirmController,
+            hintText: '请输入密码', onChanged: (value){
             print('');
           }),
           // 登录按钮
-         LoginButton(text: '完成注册',onPressed: (){
+         LoginButton(text: '完成注册',onPressed: () async {
+          MessageModel result = await controller.doRegister();
+          if(result.success){
+            // 回到根
+            Get.offAllNamed("/tabs", arguments: {
+              "initialPage": 4
+            });
+          }else{
+            Get.snackbar("提示信息", result.message);
+          }
           //  Get.toNamed('/code-login-step-two');
          }),
         ],

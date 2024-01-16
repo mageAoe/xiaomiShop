@@ -47,7 +47,7 @@ class PassTextField extends StatelessWidget {
             ),
             child: TextField(
               controller: controller,
-              autofocus: true,
+              // autofocus: true,
               obscureText: isPassword,
               style: TextStyle(
                 fontSize: ScreenAdapter.fontSize(48)

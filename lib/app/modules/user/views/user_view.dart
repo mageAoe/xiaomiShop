@@ -8,6 +8,8 @@ import '../controllers/user_controller.dart';
 
 import '../../../services/fonts.dart';
 
+import '../../../widget/logo.dart';
+
 class UserView extends GetView<UserController> {
   const UserView({Key? key}) : super(key: key);
 
@@ -33,56 +35,110 @@ class UserView extends GetView<UserController> {
         padding: EdgeInsets.all(ScreenAdapter.height(20)),
         children: [
           // 用户头像 登录注册
-          Container(
-            child: Row(
-              children: [
-                SizedBox(width: ScreenAdapter.width(40)),
-                SizedBox(
-                  height: ScreenAdapter.height(150),
-                  width: ScreenAdapter.height(150),
-                  child: CircleAvatar(
-                    radius: ScreenAdapter.width(75),
-                    backgroundImage: const AssetImage('assets/images/user.png'),
+          Obx(()=> controller.isLogin.value? SizedBox(
+              child: Row(
+                children: [
+                  SizedBox(width: ScreenAdapter.width(40)),
+                  SizedBox(
+                    height: ScreenAdapter.height(150),
+                    width: ScreenAdapter.height(150),
+                    child: CircleAvatar(
+                      radius: ScreenAdapter.width(75),
+                      backgroundImage: const AssetImage('assets/images/user.png'),
+                    ),
                   ),
-                ),
-                SizedBox(width: ScreenAdapter.width(40)),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed('/code-login-step-one');
-                  },
-                  child: Text('登录/注册', style: TextStyle(fontSize: ScreenAdapter.fontSize(46)))
-                ),
-                SizedBox(width: ScreenAdapter.width(40)),
-                Icon(Icons.arrow_forward_ios, size: ScreenAdapter.fontSize(34),color: Colors.black54)
-              ],
+                  SizedBox(width: ScreenAdapter.width(40)),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${controller.userInfo.value.username}', style: TextStyle(fontSize: ScreenAdapter.fontSize(46))),
+                        SizedBox(height: ScreenAdapter.height(20) ),
+                        Text("普通会员", style: TextStyle(fontSize: ScreenAdapter.fontSize(36)))
+                      ]
+                    ),
+                  SizedBox(width: ScreenAdapter.width(40)),
+                  Icon(Icons.arrow_forward_ios, size: ScreenAdapter.fontSize(34),color: Colors.black54)
+                ],
+              ),
+            ):SizedBox(
+              child: Row(
+                children: [
+                  SizedBox(width: ScreenAdapter.width(40)),
+                  SizedBox(
+                    height: ScreenAdapter.height(150),
+                    width: ScreenAdapter.height(150),
+                    child: CircleAvatar(
+                      radius: ScreenAdapter.width(75),
+                      backgroundImage: const AssetImage('assets/images/user.png'),
+                    ),
+                  ),
+                  SizedBox(width: ScreenAdapter.width(40)),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed('/code-login-step-one');
+                    },
+                    child: Text('登录/注册', style: TextStyle(fontSize: ScreenAdapter.fontSize(46)))
+                  ),
+                  SizedBox(width: ScreenAdapter.width(40)),
+                  Icon(Icons.arrow_forward_ios, size: ScreenAdapter.fontSize(34),color: Colors.black54)
+                ],
+              ),
             ),
           ),
-          Container(
-            height: ScreenAdapter.height(160),
-            margin: EdgeInsets.only(top: ScreenAdapter.height(60)),
-            child: Row(
-              children: [
-                UserWalletWidget(
-                    topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
-                    text: '米金',
-                ),
-                UserWalletWidget(
-                    topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
-                    text: '优惠券',
-                ),
-                UserWalletWidget(
-                    topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
-                    text: '红包',
-                ),
-                UserWalletWidget(
-                    topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
-                    text: '最高额度',
-                ),
-                const UserWalletWidget(
-                    topWidget: Icon(Icons.wallet_outlined),
-                    text: '钱包',
-                )
-              ]
+          Obx(()=>  controller.userInfo.value.gold != null ? Container(
+              height: ScreenAdapter.height(160),
+              margin: EdgeInsets.only(top: ScreenAdapter.height(60)),
+              child: Row(
+                children: [
+                  UserWalletWidget(
+                      topWidget: Text('${controller.userInfo.value.gold}', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '米金',
+                  ),
+                  UserWalletWidget(
+                      topWidget: Text('${controller.userInfo.value.coupon}', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '优惠券',
+                  ),
+                  UserWalletWidget(
+                      topWidget: Text('${controller.userInfo.value.redPacket}', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '红包',
+                  ),
+                  UserWalletWidget(
+                      topWidget: Text('${controller.userInfo.value.quota}', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '最高额度',
+                  ),
+                  const UserWalletWidget(
+                      topWidget: Icon(Icons.wallet_outlined),
+                      text: '钱包',
+                  )
+                ]
+              ),
+            ):Container(
+              height: ScreenAdapter.height(160),
+              margin: EdgeInsets.only(top: ScreenAdapter.height(60)),
+              child: Row(
+                children: [
+                  UserWalletWidget(
+                      topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '米金',
+                  ),
+                  UserWalletWidget(
+                      topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '优惠券',
+                  ),
+                  UserWalletWidget(
+                      topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '红包',
+                  ),
+                  UserWalletWidget(
+                      topWidget: Text('—', style: TextStyle(fontSize: ScreenAdapter.fontSize(80), fontWeight: FontWeight.bold)),
+                      text: '最高额度',
+                  ),
+                  const UserWalletWidget(
+                      topWidget: Icon(Icons.wallet_outlined),
+                      text: '钱包',
+                  )
+                ]
+              ),
             ),
           ),
           Container(
@@ -289,7 +345,10 @@ class UserView extends GetView<UserController> {
                 )
               ],
             ),
-          )
+          ),
+          LoginButton(text: '退出登录',onPressed: () async {
+            controller.loginOut();
+         }),
         ],
       ),
     );

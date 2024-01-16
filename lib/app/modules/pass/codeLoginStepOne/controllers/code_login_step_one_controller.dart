@@ -1,23 +1,26 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:xmshop/app/models/message.dart';
+import '../../../../services/httpsClient.dart';
 
 class CodeLoginStepOneController extends GetxController {
-  //TODO: Implement CodeLoginStepOneController
+  final HttpsClient _httpsClient = HttpsClient();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  TextEditingController editingController = TextEditingController();
+  
+  // 发送验证码
+  Future<MessageModel> sendCode() async{
+    var res = await _httpsClient.post("api/sendLoginCode", data: {
+      "tel": editingController.text
+    });
+    if(res != null){
+      print(res);
+      if(res.data["success"]){
+        return MessageModel(message: "发送验证码成功", success: true);
+      }
+      return MessageModel(message: res.data["message"], success: false);
+    }else{
+      return MessageModel(message: "网络异常", success: false);
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

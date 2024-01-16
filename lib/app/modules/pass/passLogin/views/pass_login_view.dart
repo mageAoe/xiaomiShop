@@ -30,16 +30,31 @@ class PassLoginView extends GetView<PassLoginController> {
         children:  [
           // logo
           const Logo(),
-          PassTextField(hintText: '小米账号/手机号/邮箱', onChanged: (value){
+          PassTextField(
+            controller: controller.telEditingController,
+            hintText: '小米账号/手机号/邮箱', onChanged: (value){
             print('');
           }),
-          PassTextField(hintText: '请输入密码', onChanged: (value){
+          PassTextField(
+            controller: controller.passEditingController,
+            hintText: '请输入密码', onChanged: (value){
             print('');
           }),
           const UserAgreement(),
           // 登录按钮
-         LoginButton(text: '登录',onPressed: (){
-          //  Get.toNamed('/code-login-step-two');
+         LoginButton(text: '登录',onPressed: () async {
+          if(!GetUtils.isPhoneNumber(controller.telEditingController.text) || controller.telEditingController.text.length != 11){
+            Get.snackbar("提示信息", '手机信息不合法');
+          }else{
+            var result = await controller.doLogin();
+            if(result.success){
+              Get.offAllNamed("/tabs", arguments: {
+               "initialPage": 4
+             });
+            }else{
+              Get.snackbar("提示信息", result.message);
+            }
+          }
          }),
          SizedBox(
             child: Row(

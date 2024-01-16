@@ -110,7 +110,10 @@ class RegisterStepTwoView extends GetView<RegisterStepTwoController> {
               FocusScope.of(context).requestFocus(FocusNode());
              var flag = await controller.validateCode();
              if(flag){
-              Get.toNamed('/register-step-three');
+              Get.toNamed('/register-step-three', arguments: {
+                "tel": controller.tel,
+                "code": controller.editingController.text
+              });
              }else{
               Get.snackbar("提示信息", '验证码输入错误');
              }

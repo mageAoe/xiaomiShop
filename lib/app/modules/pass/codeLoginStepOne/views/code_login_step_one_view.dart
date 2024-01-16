@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:xmshop/app/models/message.dart';
 import 'package:xmshop/app/services/screenAdaoter.dart';
 
 import '../controllers/code_login_step_one_controller.dart';
@@ -29,13 +31,26 @@ class CodeLoginStepOneView extends GetView<CodeLoginStepOneController> {
         children:  [
           // logo
           const Logo(),
-          PassTextField(hintText: '请输入手机号码', onChanged: (value){
+          PassTextField(
+            controller: controller.editingController,
+            hintText: '请输入手机号码', onChanged: (value){
             print('');
           }),
           const UserAgreement(),
           // 登录按钮
-         LoginButton(text: '获取验证码',onPressed: (){
-           Get.toNamed('/code-login-step-two');
+         LoginButton(text: '获取验证码',onPressed: () async {
+            if(!GetUtils.isPhoneNumber(controller.editingController.text) || controller.editingController.text.length != 11){
+              Get.snackbar("提示信息", '手机信息不合法');
+            }else{
+              MessageModel result = await controller.sendCode();
+              if(result.success){
+                Get.toNamed('/code-login-step-two', arguments: {
+                  "tel": controller.editingController.text
+                });
+              }else{
+                Get.snackbar("提示信息", result.message);
+              }
+            }
          }),
          SizedBox(
             child: Row(

@@ -9,9 +9,9 @@ import '../../home/views/home_view.dart';
 
 class TabsController extends GetxController {
   //TODO: Implement TabsController
-  RxInt currentIndex = 4.obs;
+  RxInt currentIndex = 0.obs;
 
-  final PageController pageController = PageController(initialPage: 4);
+  final PageController pageController = Get.arguments != null? PageController(initialPage: Get.arguments["initialPage"]) : PageController(initialPage: 0);
 
   List<Widget> pages = [
     const HomeView(),
@@ -21,10 +21,14 @@ class TabsController extends GetxController {
     const UserView(),
   ];
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    if( Get.arguments != null){
+      currentIndex.value = Get.arguments["initialPage"];
+      update();
+    }
+    super.onInit();
+  }
 
   // @override
   // void onReady() {

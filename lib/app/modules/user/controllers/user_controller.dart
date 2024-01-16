@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:xmshop/app/services/screenAdaoter.dart';
+import 'package:xmshop/app/services/userServices.dart';
+import '../../../models/user_model.dart';
 
 class UserController extends GetxController {
-  //TODO: Implement UserController
 
   List userWalletWidgetList = [
     {
@@ -28,9 +29,34 @@ class UserController extends GetxController {
     }
   ];
 
-  final count = 0.obs;
+  RxBool isLogin = false.obs;
+  // RxList userInfoList = [].obs;
 
+  var userInfo = UserModel().obs;
 
+  getUserInfo() async {
+    var tempLoginState = await UserServices.getUserLoginState();
+    isLogin.value = tempLoginState;
+    var tempList = await UserServices.getUserInfo();
+    print(tempList);
+    if(tempList.isNotEmpty){
+      print("===========");
+      // userInfoList.value = tempList;
+      userInfo.value = UserModel.fromJson(tempList[0]);
+      update();
+    }
+  }
 
-  void increment() => count.value++;
+  loginOut() {
+    UserServices.loginOut();
+    isLogin.value = false;
+    userInfo.value = UserModel();
+    update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getUserInfo();
+  }
 }

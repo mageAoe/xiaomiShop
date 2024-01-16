@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:xmshop/app/models/message.dart';
 import 'package:xmshop/app/services/screenAdaoter.dart';
 
 import '../controllers/code_login_step_two_controller.dart';
@@ -68,8 +69,6 @@ class CodeLoginStepTwoView extends GetView<CodeLoginStepTwoController> {
                 },
                 beforeTextPaste: (text) {
                   print("Allowing to paste $text");
-                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
                   return true;
                 }, 
                 appContext: context,
@@ -79,14 +78,25 @@ class CodeLoginStepTwoView extends GetView<CodeLoginStepTwoController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(onPressed: (){}, child: const Text('重新发送验证码')),
+                Obx(() => controller.secoeds.value > 0 
+                  ? TextButton(onPressed: null, child: Text('${controller.secoeds.value}秒后重新发送'))
+                  : TextButton(onPressed: (){
+                    controller.sendCode();
+                  }, child: const Text('重新发送验证码'))
+                ),
                 TextButton(onPressed: (){}, child: const Text('获取帮助')),
               ],
             ),
           ),
-          LoginButton(text: '获取验证码',onPressed: (){
-           // 获取验证码
-
+          LoginButton(text: '登录',onPressed: () async {
+            MessageModel result = await controller.doLogin();
+            if(result.success){
+              Get.offAllNamed("/tabs", arguments: {
+               "initialPage": 4
+              });
+            }else{
+              Get.snackbar("提示信息", result.message);
+            }
            // 隐藏键盘
          })
         ],
