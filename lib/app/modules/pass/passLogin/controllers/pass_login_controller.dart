@@ -3,13 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:xmshop/app/models/message.dart';
 import '../../../../services/httpsClient.dart';
 import 'package:xmshop/app/services/storage.dart';
+import '../../../user/controllers/user_controller.dart';
 
 class PassLoginController extends GetxController {
   final HttpsClient _httpsClient = HttpsClient();
-
+  UserController userController = Get.find<UserController>();
   TextEditingController telEditingController = TextEditingController();
   TextEditingController passEditingController = TextEditingController();
 
+  @override
+  void onClose(){
+    //更新用户状态
+    userController.getUserInfo();
+    super.onClose();
+  }
 
   Future<MessageModel> doLogin() async {
     var res = await _httpsClient.post("api/doLogin", data: {

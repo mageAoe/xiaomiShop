@@ -48,9 +48,10 @@ class PassLoginView extends GetView<PassLoginController> {
           }else{
             var result = await controller.doLogin();
             if(result.success){
-              Get.offAllNamed("/tabs", arguments: {
-               "initialPage": 4
-             });
+            //   Get.offAllNamed("/tabs", arguments: {
+            //    "initialPage": 4
+            //  });
+              Get.back();
             }else{
               Get.snackbar("提示信息", result.message);
             }

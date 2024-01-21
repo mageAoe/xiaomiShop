@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../services/cartServices.dart';
+import '../../../services/userServices.dart';
 
 class CartController extends GetxController {
   //TODO: Implement CartController
@@ -85,6 +86,41 @@ class CartController extends GetxController {
       return true;
     }
     return false;
+  }
+
+  // 判断用户是否登录 
+  Future<bool> isLogin() async {
+    return await UserServices.getUserLoginState();
+  }
+
+  // 获取要结算的商品
+  List getCheckoutData(){
+    var tempList = [];
+    for (var i = 0; i < cartList.length; i++) {
+     if(cartList[i]['checked'] == true){
+      tempList.add(cartList[i]);
+      }
+    }
+    return tempList;
+  }
+
+  checkout() async{
+    bool loginState = await isLogin();
+    print('----------------');
+    // print(loginState);
+    if(loginState){
+      List checkListData = getCheckoutData();
+      // 判断购物车里面有没有要结算的商品
+      if(checkListData.isNotEmpty){
+        Get.toNamed('/checkout');
+      }else{
+        Get.snackbar('提示信息！', '购物车中没有要结算的商品');
+      }
+    }else{
+      // 跳转登录
+      Get.toNamed('/code-login-step-one');
+      Get.snackbar('提示信息！', '您还没有登录');
+    }
   }
   
 }

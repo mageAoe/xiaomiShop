@@ -4,9 +4,11 @@ import 'package:xmshop/app/models/message.dart';
 import '../../../../services/httpsClient.dart';
 import 'package:xmshop/app/services/storage.dart';
 import 'dart:async';
+import '../../../user/controllers/user_controller.dart';
 
 class CodeLoginStepTwoController extends GetxController {
   final HttpsClient _httpsClient = HttpsClient();
+  UserController userController = Get.find<UserController>();
 
   String tel = Get.arguments["tel"];
 
@@ -18,6 +20,13 @@ class CodeLoginStepTwoController extends GetxController {
   void onInit() {
     super.onInit();
     countDown();
+  }
+
+  @override
+  void onClose(){
+    //更新用户状态
+    userController.getUserInfo();
+    super.onClose();
   }
 
     // 倒计时方法

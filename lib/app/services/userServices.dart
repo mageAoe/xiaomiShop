@@ -14,7 +14,7 @@ class UserServices{
   static Future<bool> getUserLoginState() async{
     List? userinfo = await getUserInfo();
     print(userinfo);
-    if(userinfo != [] && userinfo[0]["username"] != ""){
+    if(userinfo.isNotEmpty && userinfo[0]["username"] != ""){
       return true;
     }else{
       return false;

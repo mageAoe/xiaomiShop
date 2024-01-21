@@ -90,7 +90,11 @@ class CartView extends GetView {
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)))),
-                          onPressed: (){}, 
+                          onPressed: (){
+                            // 判断用户是否登录
+                            // Get.toNamed('/checkout');
+                            controller.checkout();
+                          }, 
                           child: const Text('结算')
                         )
                       ],
