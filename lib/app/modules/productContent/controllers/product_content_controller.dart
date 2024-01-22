@@ -4,9 +4,10 @@ import 'package:xmshop/app/services/screenAdaoter.dart';
 import '../../../models/product_model.dart';
 import '../../../services/httpsClient.dart';
 import '../../../services/cartServices.dart';
+import '../../../services/userServices.dart';
+import 'package:xmshop/app/services/storage.dart';
 
 class ProductContentController extends GetxController {
-  //TODO: Implement ProductContentController
   ScrollController scrollController = ScrollController();
   final HttpsClient _httpsClient = HttpsClient();
 
@@ -225,9 +226,35 @@ class ProductContentController extends GetxController {
     Get.snackbar('提示!', "加入购物车成功");
   }
 
-  void buy(){
+  void buy() async {
     setSelectedAttr();
-    print('立即购买');
-    Get.back();
+    bool loginState = await isLogin();
+    if(loginState){
+      // 保存商品信息
+        List tempList = [];
+        tempList.add({
+          "_id": pcontent.value.sId,
+          "title": pcontent.value.title,
+          "price": pcontent.value.price,
+          "selectedAttr": selectedAttr.value,
+          "count": buyNum.value,
+          "pic": pcontent.value.pic,
+          "checked": true
+       });
+        Storage.setData('checkoutList', tempList);
+      // 执行跳转
+       Get.toNamed('/checkout');
+    }else{
+      // 跳转登录
+      Get.toNamed('/code-login-step-one');
+      Get.snackbar('提示信息！', '您还没有登录');
+    }
+    // Get.back();
   }
+
+  // 判断用户是否登录
+  Future<bool> isLogin() async {
+    return await UserServices.getUserLoginState();
+  }
+  // 获取要结算的商品
 }

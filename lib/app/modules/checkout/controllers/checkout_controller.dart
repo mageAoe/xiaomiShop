@@ -1,23 +1,20 @@
 import 'package:get/get.dart';
+import 'package:xmshop/app/services/storage.dart';
 
 class CheckoutController extends GetxController {
-  //TODO: Implement CheckoutController
+  RxList checkoutList = [].obs;
 
-  final count = 0.obs;
   @override
-  void onInit() {
+  onInit(){
+    getCheckoutData();
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  // 获取
+  getCheckoutData() async{
+    List tempList = await Storage.getData('checkoutList');
+    checkoutList.value = tempList;
+    update();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

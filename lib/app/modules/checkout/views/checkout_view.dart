@@ -5,9 +5,11 @@ import 'package:xmshop/app/services/screenAdaoter.dart';
 
 import '../controllers/checkout_controller.dart';
 
+import '../../../services/httpsClient.dart';
+
 class CheckoutView extends GetView<CheckoutController> {
 
-  Widget checkoutItem(){
+  Widget checkoutItem(value){
     return Container(
       padding: EdgeInsets.only(top: ScreenAdapter.height(20), bottom: ScreenAdapter.height(20), right: ScreenAdapter.height(20)),
       child: Row(
@@ -17,21 +19,21 @@ class CheckoutView extends GetView<CheckoutController> {
             width: ScreenAdapter.width(200),
             height: ScreenAdapter.width(200),
             padding: EdgeInsets.all(ScreenAdapter.width(20)),
-            child: Image.network('https://www.itying.com/images/shouji.png', fit: BoxFit.fitHeight),
+            child: Image.network('${ HttpsClient.repleaUrl(value["pic"])}', fit: BoxFit.fitHeight),
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('手机 14', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('${value["title"]}', style: const TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(height: ScreenAdapter.height(10)),
-                const Text('白色 128GB'),
+                Text('${value["selectedAttr"]}'),
                 SizedBox(height: ScreenAdapter.height(10)),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('￥121', style: TextStyle(color: Colors.red)),
-                    Text('x2', style: TextStyle(color: Colors.black87))
+                    Text('￥${value["price"]}', style: const TextStyle(color: Colors.red)),
+                    Text('x${value["count"]}', style: const TextStyle(color: Colors.black87))
                   ],
                 )
                 
@@ -87,11 +89,12 @@ class CheckoutView extends GetView<CheckoutController> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(ScreenAdapter.width(20))
             ),
-            child: Column(
-              children: [
-                checkoutItem(),
-                checkoutItem()
-              ],
+            child: Obx(()=> controller.checkoutList.isNotEmpty ? Column(
+                children: 
+                  controller.checkoutList.map((value) {
+                    return checkoutItem(value);
+                  }).toList(),
+              ): const Text(''),
             ),
           ),
           SizedBox( height: ScreenAdapter.height(40)),

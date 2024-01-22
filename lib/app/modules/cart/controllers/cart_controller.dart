@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:xmshop/app/services/storage.dart';
 import '../../../services/cartServices.dart';
 import '../../../services/userServices.dart';
 
@@ -7,6 +8,7 @@ class CartController extends GetxController {
 
   RxList cartList = [].obs;
   RxBool checkedAllBox = false.obs;
+  RxBool isEdit = false.obs;
 
   void getCartListData() async{
     var tempList = await CartServices.getCartList();
@@ -112,6 +114,8 @@ class CartController extends GetxController {
       List checkListData = getCheckoutData();
       // 判断购物车里面有没有要结算的商品
       if(checkListData.isNotEmpty){
+        // 保存要结算的商品
+        Storage.setData('checkoutList', checkListData);
         Get.toNamed('/checkout');
       }else{
         Get.snackbar('提示信息！', '购物车中没有要结算的商品');
@@ -121,6 +125,26 @@ class CartController extends GetxController {
       Get.toNamed('/code-login-step-one');
       Get.snackbar('提示信息！', '您还没有登录');
     }
+  }
+
+  // 开始编辑
+  void changeIsEdit(){
+    isEdit.value = !isEdit.value;
+    update();
+  }
+
+  // 删除购物车数据
+  deleteCartData(){
+    var tempList = [];
+    for (var i = 0; i < cartList.length; i++) {
+     if(cartList[i]['checked'] == false){
+      tempList.add(cartList[i]);
+      }
+    }
+    // 把没有选中的商品保存在cart里面
+    cartList.value = tempList;
+    CartServices.setCheckedCartData(tempList);
+    update();
   }
   
 }
