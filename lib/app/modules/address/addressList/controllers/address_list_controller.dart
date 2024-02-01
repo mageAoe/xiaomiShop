@@ -67,4 +67,25 @@ class AddressListController extends GetxController {
     }
   }
 
+   deleteAddress(id) async{
+    List userList = await UserServices.getUserInfo();
+    UserModel userInfo = UserModel.fromJson(userList[0]);
+    // 表单校验
+    Map tempJson = {
+      'uid': userInfo.sid,
+      'id': id
+    };
+    String sign = SignServices.getSign({
+      ...tempJson,
+      'salt': userInfo.salt
+    });
+    var res = await _httpsClient.post('api/deleteAddress', data: {
+      ...tempJson,
+      'sign': sign
+    });
+    if(res != null){
+      getAddressList();
+    }
+  }
+
 }
