@@ -120,4 +120,28 @@ class CartServices {
   static clearCartData() async {
     await Storage.clear('cartList');
   }
+
+  // 结算后删除购物车中要结算的商品
+  static deleteCheckOutData(checkoutList) async{
+    List? cartListData = await Storage.getData("cartList");
+    if(cartListData != null){
+      var tempList = [];
+      for (var i = 0; i < cartListData.length; i++) {
+        if(!hasCheckoutData(checkoutList, cartListData[i])){
+          tempList.add(cartListData[i]);
+        }
+      }
+      // return tempList;
+      setCheckedCartData(tempList);
+    }
+  }
+
+  static hasCheckoutData(checkoutList, cartItem){
+    for (var i = 0; i < checkoutList.length; i++) {
+        if(checkoutList[i]['_id']==cartItem['_id'] && checkoutList[i]['selectedAttr'] == cartItem['selectedAttr']){
+          return true;
+        }
+    }
+    return false;
+  }
 }

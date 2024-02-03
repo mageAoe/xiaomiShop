@@ -107,11 +107,12 @@ class CartView extends GetView {
                               : Row(
                                   children: [
                                     const Text('合计: '),
-                                    Text('￥98.9',
-                                        style: TextStyle(
-                                            fontSize:
-                                                ScreenAdapter.fontSize(48),
-                                            color: Colors.red)),
+                                    Obx(()=> Text('￥${controller.allPrice.value}',
+                                          style: TextStyle(
+                                              fontSize:
+                                                  ScreenAdapter.fontSize(48),
+                                              color: Colors.red)),
+                                    ),
                                     SizedBox(width: ScreenAdapter.width(20)),
                                     ElevatedButton(
                                         style: ButtonStyle(

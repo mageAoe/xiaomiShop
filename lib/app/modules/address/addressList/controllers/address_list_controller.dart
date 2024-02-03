@@ -15,14 +15,14 @@ class AddressListController extends GetxController {
   
   @override
   void onInit() {
-    print('onInit-----------');
+    // print('onInit-----------');
     getAddressList();
     super.onInit();
   }
 
   @override
   void onClose() {
-    print('onClose-----------');
+    // print('onClose-----------');
     checkoutController.getDefaultAddress();
     super.onClose();
   }

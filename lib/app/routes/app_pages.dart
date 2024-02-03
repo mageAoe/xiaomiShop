@@ -9,6 +9,10 @@ import '../modules/address/addressList/views/address_list_view.dart';
 import '../modules/cart/views/cart_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
+import '../modules/order/bindings/order_binding.dart';
+import '../modules/order/views/order_view.dart';
+import '../modules/orderInfo/bindings/order_info_binding.dart';
+import '../modules/orderInfo/views/order_info_view.dart';
 import '../modules/pass/codeLoginStepOne/bindings/code_login_step_one_binding.dart';
 import '../modules/pass/codeLoginStepOne/views/code_login_step_one_view.dart';
 import '../modules/pass/codeLoginStepTwo/bindings/code_login_step_two_binding.dart';
@@ -23,6 +27,8 @@ import '../modules/pass/registerStepThree/bindings/register_step_three_binding.d
 import '../modules/pass/registerStepThree/views/register_step_three_view.dart';
 import '../modules/pass/registerStepTwo/bindings/register_step_two_binding.dart';
 import '../modules/pass/registerStepTwo/views/register_step_two_view.dart';
+import '../modules/pay/bindings/pay_binding.dart';
+import '../modules/pay/views/pay_view.dart';
 import '../modules/productContent/bindings/product_content_binding.dart';
 import '../modules/productContent/views/product_content_view.dart';
 import '../modules/productList/bindings/product_list_binding.dart';
@@ -37,7 +43,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.TABS;
+  static const INITIAL = Routes.ORDER;
 
   static final routes = [
     GetPage(
@@ -129,6 +135,21 @@ class AppPages {
       name: _Paths.ADDRESS_EDIT,
       page: () => const AddressEditView(),
       binding: AddressEditBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAY,
+      page: () => const PayView(),
+      binding: PayBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER,
+      page: () => const OrderView(),
+      binding: OrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER_INFO,
+      page: () => const OrderInfoView(),
+      binding: OrderInfoBinding(),
     ),
   ];
 }

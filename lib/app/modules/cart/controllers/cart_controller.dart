@@ -4,16 +4,18 @@ import '../../../services/cartServices.dart';
 import '../../../services/userServices.dart';
 
 class CartController extends GetxController {
-  //TODO: Implement CartController
 
   RxList cartList = [].obs;
   RxBool checkedAllBox = false.obs;
   RxBool isEdit = false.obs;
+  RxDouble allPrice = 0.0.obs;
 
   void getCartListData() async{
     var tempList = await CartServices.getCartList();
     cartList.value = tempList;
     checkedAllBox.value = isCheckedAll();
+    // 计算总价
+    computedAllPrice();
     update();
   }
 
@@ -28,6 +30,8 @@ class CartController extends GetxController {
     }
     cartList.value = tempList;
     CartServices.setCheckedCartData(tempList);
+    // 计算总价
+    computedAllPrice();
     update();
   }
 
@@ -46,6 +50,8 @@ class CartController extends GetxController {
     }
     cartList.value = tempList;
     CartServices.setCheckedCartData(tempList);
+    // 计算总价
+    computedAllPrice();
     update();
   }
 
@@ -61,6 +67,8 @@ class CartController extends GetxController {
     cartList.value = tempList;
     checkedAllBox.value = isCheckedAll();
     CartServices.setCheckedCartData(tempList);
+    // 计算总价
+    computedAllPrice();
     update();
   }
 
@@ -74,6 +82,8 @@ class CartController extends GetxController {
     }
     cartList.value = tempList;
     CartServices.setCheckedCartData(tempList);
+    // 计算总价
+    computedAllPrice();
     update();
   }
 
@@ -108,7 +118,7 @@ class CartController extends GetxController {
 
   checkout() async{
     bool loginState = await isLogin();
-    print('----------------');
+    // print('----------------');
     // print(loginState);
     if(loginState){
       List checkListData = getCheckoutData();
@@ -147,4 +157,14 @@ class CartController extends GetxController {
     update();
   }
   
+  // 计算总价
+  computedAllPrice(){
+    double tempAllPrice = 0.0;
+    for (var i = 0; i < cartList.length; i++) {
+     if(cartList[i]['checked'] == true){
+        tempAllPrice += cartList[i]['price']*cartList[i]['count'];
+      }
+    }
+    allPrice.value = tempAllPrice;
+  }
 }

@@ -224,11 +224,12 @@ class CheckoutView extends GetView<CheckoutController> {
                     children: [
                     Row(
                       children: [
-                        const Text('共1件,合计: '),
-                        Text('￥98.9', style: TextStyle(
-                          fontSize: ScreenAdapter.fontSize(48),
-                          color: Colors.red
-                        )), 
+                        Obx(()=> Text('共${controller.allNum.value}件,合计: ')),
+                        Obx(()=> Text('￥${controller.allPrice.value}', style: TextStyle(
+                            fontSize: ScreenAdapter.fontSize(48),
+                            color: Colors.red
+                          )),
+                        ), 
                       ],
                     ),
                     ElevatedButton(
@@ -242,7 +243,8 @@ class CheckoutView extends GetView<CheckoutController> {
                                       borderRadius: BorderRadius.circular(10)))),
                           onPressed: (){
                             // 判断用户是否登录
-                            Get.toNamed('/checkout');
+                            // Get.toNamed('/checkout');
+                            controller.doCheckout();
                           }, 
                           child: const Text('结算')
                         )
